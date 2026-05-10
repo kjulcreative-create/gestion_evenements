@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventHub — Gestion d'événements</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header id="app-header"></header>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="landing-hero">
+      <img src="../assets/img/logo-eventhub.png" alt="EventHub" class="landing-logo">
+      <span class="landing-eyebrow">
+        <span class="dot-live"></span>Plateforme en ligne
+      </span>
+      <h1>Gérez vos événements<br><span class="gradient-text">sans friction.</span></h1>
+      <p>Créez, publiez et gérez vos événements en quelques clics. Vos participants s'inscrivent en quelques secondes.</p>
+
+      <!-- Bandeau discret pour réouvrir le modal d'info -->
+      <button type="button" class="info-banner" id="open-info-modal">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>
+        <span>À propos de cette démo</span>
+      </button>
+    </section>
+
+    <!-- Role cards -->
+
+  <div class="role-grid">
+    <a href="visiteur/index.html" class="role-card">
+      <div class="role-icon-wrap">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="26" height="26" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z"/>
+        </svg>
+      </div>
+      <h2>Espace Visiteur</h2>
+      <p>Découvrez et rejoignez des événements près de chez vous en quelques secondes.</p>
+      <ul class="role-list">
+        <li>Parcourir tous les événements</li>
+        <li>Rechercher par titre ou lieu</li>
+        <li>Filtrer par disponibilité</li>
+        <li>S'inscrire instantanément</li>
+      </ul>
+      <div class="role-cta">
+        <span>Parcourir les événements</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+        </svg>
+      </div>
+    </a>
+
+    <a href="admin/index.html" class="role-card role-card-admin">
+      <div class="role-icon-wrap">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="26" height="26" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z"/>
+        </svg>
+      </div>
+      <h2>Espace Administrateur</h2>
+      <p>Gérez événements et inscriptions depuis un tableau de bord unifié.</p>
+      <ul class="role-list">
+        <li>Créer et modifier des événements</li>
+        <li>Supprimer des événements</li>
+        <li>Gérer les inscriptions</li>
+        <li>Statistiques en temps réel</li>
+      </ul>
+      <div class="role-cta role-cta-admin">
+        <span>Accéder au dashboard</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/>
+        </svg>
+      </div>
+    </a>
+  </div>
+  </main>
+
+  <!-- ========== MODAL DEUX ÉTAPES ========== -->
+  <div class="modal-overlay" id="info-modal" role="dialog" aria-modal="true" hidden>
+    <div class="modal-container">
+
+      <!-- Barre de progression (toujours visible) -->
+      <div class="modal-topbar">
+        <div class="modal-progress">
+          <div class="modal-progress-step is-active" id="progress-step-1">
+            <div class="modal-progress-dot is-active" id="dot-1">1</div>
+            <span class="modal-progress-label">Points importants</span>
+          </div>
+          <div class="modal-progress-line" id="progress-line"></div>
+          <div class="modal-progress-step" id="progress-step-2">
+            <div class="modal-progress-dot" id="dot-2">2</div>
+            <span class="modal-progress-label">Ce qui est démontré</span>
+          </div>
+        </div>
+        <button type="button" class="modal-close" id="close-info-modal" aria-label="Fermer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- ───── ÉTAPE 1 : Points importants ───── -->
+      <div class="modal-step active" id="modal-step-1">
+        <div class="modal-hero modal-hero--warn">
+          <div class="modal-hero-inner">
+            <div class="modal-hero-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+            </div>
+            <div class="modal-hero-text">
+              <h2>Points importants à noter</h2>
+              <p>Informations essentielles avant d'utiliser cette démo.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-items-grid">
+            <div class="modal-item-card modal-item-card--warn">
+              <div class="modal-item-emoji">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25z"/></svg>
+              </div>
+              <div class="modal-item-title">Pas d'authentification</div>
+              <div class="modal-item-desc">Aucun système de <strong>login / mot de passe</strong> n'est implémenté dans cette démo.</div>
+            </div>
+            <div class="modal-item-card modal-item-card--warn">
+              <div class="modal-item-emoji">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
+              </div>
+              <div class="modal-item-title">Accès admin libre</div>
+              <div class="modal-item-desc">L'espace <strong>administrateur</strong> est librement accessible à des fins de démonstration.</div>
+            </div>
+            <div class="modal-item-card modal-item-card--warn">
+              <div class="modal-item-emoji">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z"/></svg>
+              </div>
+              <div class="modal-item-title">Sécurité non implémentée</div>
+              <div class="modal-item-desc"><strong>JWT, CSRF, rate limiting</strong> hors périmètre — non mis en place pour ce test.</div>
+            </div>
+            <div class="modal-item-card modal-item-card--warn">
+              <div class="modal-item-emoji">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/></svg>
+              </div>
+              <div class="modal-item-title">Données SQLite locales</div>
+              <div class="modal-item-desc">Stockage en <strong>SQLite local</strong>, réinitialisable à tout moment.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="modal-btn modal-btn-next" id="next-step-btn">
+            Voir ce qui est démontré →
+          </button>
+        </div>
+      </div>
+
+      <!-- ───── ÉTAPE 2 : Ce qui est démontré ───── -->
+      <div class="modal-step" id="modal-step-2">
+        <div class="modal-hero modal-hero--feat">
+          <div class="modal-hero-inner">
+            <div class="modal-hero-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+            </div>
+            <div class="modal-hero-text">
+              <h2>Ce qui est démontré</h2>
+              <p>Les fonctionnalités clés implémentées dans cette application.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-items-grid">
+            <div class="modal-item-card modal-item-card--feat">
+              <div class="modal-item-emoji">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"/></svg>
+              </div>
+              <div class="modal-item-title">API REST complète</div>
+              <div class="modal-item-desc">Validation des données et <strong>codes HTTP appropriés</strong> sur chaque endpoint.</div>
+            </div>
+            <div class="modal-item-card modal-item-card--feat">
+              <div class="modal-item-emoji">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
+              </div>
+              <div class="modal-item-title">Règles métier critiques</div>
+              <div class="modal-item-desc">Gestion de la <strong>capacité</strong>, unicité de l'email, validation stricte.</div>
+            </div>
+            <div class="modal-item-card modal-item-card--feat">
+              <div class="modal-item-emoji">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18h3"/></svg>
+              </div>
+              <div class="modal-item-title">Interface responsive</div>
+              <div class="modal-item-desc">UI adaptative avec <strong>recherche</strong> et <strong>filtres</strong> dynamiques en temps réel.</div>
+            </div>
+            <div class="modal-item-card modal-item-card--feat">
+              <div class="modal-item-emoji">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"/></svg>
+              </div>
+              <div class="modal-item-title">Gestion des erreurs</div>
+              <div class="modal-item-desc">Retours visuels clairs côté client pour <strong>chaque action</strong> utilisateur.</div>
+            </div>
+          </div>
+
+          <div class="modal-tech">
+            <span class="tech-tag">PHP 8</span>
+            <span class="tech-tag">Laravel 13</span>
+            <span class="tech-tag">SQLite</span>
+            <span class="tech-tag">HTML / CSS / JS natif</span>
+            <span class="tech-tag">REST API</span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="modal-btn modal-btn-back" id="back-step-btn">← Retour</button>
+          <button type="button" class="modal-btn modal-btn-primary" id="continue-btn">
+            Accéder à l'application →
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../js/layout.js"></script>
+  <script>Layout.initLanding();</script>
+
+  <!-- ========== SCRIPT DU MODAL ========== -->
+  <script>
+    (function () {
+      const modal       = document.getElementById('info-modal');
+      const openBtn     = document.getElementById('open-info-modal');
+      const closeBtn    = document.getElementById('close-info-modal');
+      const continueBtn = document.getElementById('continue-btn');
+      const nextBtn     = document.getElementById('next-step-btn');
+      const backBtn     = document.getElementById('back-step-btn');
+      const step1       = document.getElementById('modal-step-1');
+      const step2       = document.getElementById('modal-step-2');
+      const pStep1      = document.getElementById('progress-step-1');
+      const pStep2      = document.getElementById('progress-step-2');
+      const dot1        = document.getElementById('dot-1');
+      const dot2        = document.getElementById('dot-2');
+      const line        = document.getElementById('progress-line');
+      const KEY         = 'eventhub_info_seen';
+
+      function openModal() {
+        goToStep(1);
+        modal.hidden = false;
+        requestAnimationFrame(() => modal.classList.add('modal-open'));
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        setTimeout(() => { modal.hidden = true; }, 300);
+        try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      }
+
+      function goToStep(n) {
+        if (n === 1) {
+          step1.classList.add('active');
+          step2.classList.remove('active');
+          pStep1.classList.add('is-active');
+          pStep1.classList.remove('is-done');
+          pStep2.classList.remove('is-active', 'is-done');
+          dot1.classList.add('is-active');
+          dot1.classList.remove('is-done');
+          dot2.classList.remove('is-active', 'is-done');
+          line.classList.remove('is-filled');
+        } else {
+          step1.classList.remove('active');
+          step2.classList.add('active');
+          pStep1.classList.remove('is-active');
+          pStep1.classList.add('is-done');
+          pStep2.classList.add('is-active');
+          dot1.classList.remove('is-active');
+          dot1.classList.add('is-done');
+          dot2.classList.add('is-active');
+          line.classList.add('is-filled');
+        }
+      }
+
+      // Affichage automatique à la première visite
+      try {
+        if (!sessionStorage.getItem(KEY)) setTimeout(openModal, 600);
+      } catch (e) { setTimeout(openModal, 600); }
+
+      openBtn.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      continueBtn.addEventListener('click', closeModal);
+      nextBtn.addEventListener('click', () => goToStep(2));
+      backBtn.addEventListener('click', () => goToStep(1));
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+    })();
+  </script>
+</body>
+</html>

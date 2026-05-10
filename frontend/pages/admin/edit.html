@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventHub — Modifier l'événement</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+  <header id="app-header"></header>
+
+  <main class="container" style="padding-bottom:80px">
+    <div style="max-width:800px;margin:0 auto">
+
+      <div style="padding:36px 0 20px">
+        <a class="back-link" href="index.html">← Retour au dashboard</a>
+      </div>
+
+      <!-- Skeleton chargement -->
+      <div id="loading-state">
+        <div class="skeleton-card" style="height:56px;margin-bottom:16px;border-radius:var(--radius-md)"></div>
+        <div class="skeleton-card" style="height:420px"></div>
+      </div>
+
+      <!-- Contenu principal -->
+      <div id="page-content" style="display:none">
+
+        <!-- En-tête avec titre et bouton supprimer -->
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:28px">
+          <h1 id="event-title-display" style="font-family:var(--font-display);font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:700;line-height:1.25;letter-spacing:-0.4px;background:linear-gradient(135deg,#1E1B4B,#7C3AED);-webkit-background-clip:text;background-clip:text;color:transparent;max-width:580px"></h1>
+          <button id="delete-btn" class="btn-danger" style="padding:10px 18px;font-size:0.88rem;white-space:nowrap;flex-shrink:0">
+            🗑 Supprimer
+          </button>
+        </div>
+
+        <!-- Formulaire de modification -->
+        <div class="form-card" style="margin-bottom:28px">
+          <h2 style="font-family:var(--font-display);font-size:1.2rem;margin-bottom:6px;letter-spacing:-0.2px">Modifier les informations</h2>
+          <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:22px">Les modifications sont appliquées immédiatement.</p>
+          <form id="edit-form" novalidate>
+            <div class="field">
+              <div class="label-row">
+                <label for="title">Titre</label>
+                <span class="char-count" id="title-count">0/100</span>
+              </div>
+              <input type="text" id="title" name="title" maxlength="100" autocomplete="off" />
+              <span class="field-error" data-error="title"></span>
+            </div>
+
+            <div class="field">
+              <label for="description">Description</label>
+              <textarea id="description" name="description" style="min-height:110px"></textarea>
+              <span class="field-error" data-error="description"></span>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="date">Date et heure</label>
+                <input type="datetime-local" id="date" name="date" />
+                <span class="field-error" data-error="date"></span>
+              </div>
+              <div class="field">
+                <label for="capacity">Capacité max</label>
+                <input type="number" id="capacity" name="capacity" min="1" />
+                <span class="field-error" data-error="capacity"></span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="location">Lieu</label>
+              <input type="text" id="location" name="location" autocomplete="off" />
+              <span class="field-error" data-error="location"></span>
+            </div>
+
+            <button type="submit" class="btn btn-block" id="submit-btn" style="margin-top:8px">Enregistrer les modifications</button>
+          </form>
+        </div>
+
+        <!-- Liste des inscrits -->
+        <div class="registrations-card">
+          <h2>Inscrits <span class="count-pill" id="reg-count">…</span></h2>
+          <div id="reg-list" class="reg-list"></div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="../../js/api.js"></script>
+  <script src="../../js/utils.js"></script>
+  <script src="../../js/layout.js"></script>
+  <script>Layout.initAdmin('edit');</script>
+  <script src="../../js/admin/admin-edit.js"></script>
+</body>
+</html>
