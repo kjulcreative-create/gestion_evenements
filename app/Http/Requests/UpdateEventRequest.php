@@ -21,7 +21,7 @@ class UpdateEventRequest extends FormRequest
             'date' => 'sometimes|required|date',
             'location' => 'sometimes|required|string',
             'capacity' => 'sometimes|required|integer|min:1',
-            'cover_image' => 'sometimes|nullable|url|max:500',
+            'cover_image' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ];
     }
 

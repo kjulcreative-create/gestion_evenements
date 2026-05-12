@@ -3,10 +3,55 @@
   const btn = document.getElementById('submit-btn');
   const titleInput = form.title;
   const titleCount = document.getElementById('title-count');
+  const uploadZone = document.getElementById('upload-zone');
+  const fileInput = document.getElementById('cover_image');
+  const imagePreview = document.getElementById('image-preview');
+  const previewImg = document.getElementById('preview-img');
+  const previewName = document.getElementById('preview-name');
+  const removeImageBtn = document.getElementById('remove-image');
 
   function updateCount() { titleCount.textContent = `${titleInput.value.length}/100`; }
   titleInput.addEventListener('input', updateCount);
   updateCount();
+
+  function showPreview(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      previewImg.src = e.target.result;
+      previewName.textContent = file.name;
+      uploadZone.style.display = 'none';
+      imagePreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearPreview() {
+    fileInput.value = '';
+    previewImg.src = '';
+    previewName.textContent = '';
+    uploadZone.style.display = '';
+    imagePreview.style.display = 'none';
+  }
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) showPreview(fileInput.files[0]);
+  });
+
+  removeImageBtn.addEventListener('click', clearPreview);
+
+  uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+  uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      fileInput.files = dt.files;
+      showPreview(file);
+    }
+  });
 
   function setError(name, msg) {
     const el = form.querySelector(`[data-error="${name}"]`);
@@ -52,13 +97,15 @@
     btn.disabled = true;
     btn.innerHTML = `<span class="spinner"></span> Création...`;
     try {
-      await api.createEvent({
-        title: raw.title,
-        description: raw.description || null,
-        date: toIsoUtc(raw.date),
-        location: raw.location,
-        capacity: parseInt(raw.capacity, 10),
-      });
+      const fd = new FormData();
+      fd.append('title', raw.title);
+      if (raw.description) fd.append('description', raw.description);
+      fd.append('date', toIsoUtc(raw.date));
+      fd.append('location', raw.location);
+      fd.append('capacity', parseInt(raw.capacity, 10));
+      if (fileInput.files[0]) fd.append('cover_image', fileInput.files[0]);
+
+      await api.createEvent(fd);
       window.location.href = 'index.html?created=1';
     } catch (err) {
       if (err.status === 400 && err.data && err.data.details) {

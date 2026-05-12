@@ -94,9 +94,13 @@
       timeStr = new Date(ev.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
     } catch {}
 
+    const heroStyle = ev.coverImage
+      ? `style="background-image:linear-gradient(180deg,rgba(7,9,14,0.80) 0%,rgba(7,9,14,0.94) 100%),url('${ev.coverImage}');background-size:cover;background-position:center;"`
+      : '';
+
     main.innerHTML = `
       <!-- HERO pleine largeur -->
-      <section class="detail-hero">
+      <section class="detail-hero" ${heroStyle}>
         <div class="container detail-hero-inner">
           <a class="back-link" href="index.html">← Tous les événements</a>
           <div class="detail-hero-eyebrow">Événement</div>
@@ -113,8 +117,14 @@
       <div class="container">
         <div class="detail-body">
 
-          <!-- Colonne gauche : description + participants -->
+          <!-- Colonne gauche : image + description + participants -->
           <div>
+            ${ev.coverImage ? `
+              <div class="content-section" style="padding:0;overflow:hidden">
+                <img src="${ev.coverImage}" alt="${escapeHtml(ev.title)}" style="width:100%;height:260px;object-fit:cover;display:block" loading="lazy" />
+              </div>
+            ` : ''}
+
             ${ev.description ? `
               <div class="content-section">
                 <h2 class="content-section-title">À propos de l'événement</h2>

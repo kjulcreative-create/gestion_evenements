@@ -3,10 +3,11 @@ const API_BASE = 'http://127.0.0.1:8000/api';
 const api = {
   async request(endpoint, options = {}) {
     const url = `${API_BASE}${endpoint}`;
+    const isFormData = options.body instanceof FormData;
     const config = {
       headers: {
-        'Content-Type': 'application/json',
         'Accept': 'application/json',
+        ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       },
       ...options,
     };
@@ -49,17 +50,19 @@ const api = {
   },
 
   createEvent(data) {
+    const isForm = data instanceof FormData;
     return this.request('/events', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: isForm ? data : JSON.stringify(data),
     });
   },
 
   updateEvent(id, data) {
-    return this.request(`/events/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-    });
+    if (data instanceof FormData) {
+      data.append('_method', 'PUT');
+      return this.request(`/events/${id}`, { method: 'POST', body: data });
+    }
+    return this.request(`/events/${id}`, { method: 'PUT', body: JSON.stringify(data) });
   },
 
   deleteEvent(id) {

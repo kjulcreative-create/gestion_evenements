@@ -72,6 +72,34 @@
               <span class="field-error" data-error="location"></span>
             </div>
 
+            <div class="field">
+              <label>Image de couverture <span style="color:var(--text-muted);font-weight:400">(optionnelle)</span></label>
+              <!-- Image actuelle -->
+              <div class="file-preview" id="current-image-wrap" style="display:none;margin-bottom:10px">
+                <img id="current-img" src="" alt="Image actuelle" />
+                <div class="file-preview-bar">
+                  <span class="file-preview-name">Image actuelle</span>
+                  <button type="button" class="file-preview-remove" id="remove-current-image">Supprimer</button>
+                </div>
+              </div>
+              <!-- Zone upload -->
+              <div class="file-upload-zone" id="upload-zone">
+                <input type="file" id="cover_image" name="cover_image" accept="image/jpeg,image/png,image/jpg,image/gif,image/webp" />
+                <span class="file-upload-icon">🖼️</span>
+                <p class="file-upload-hint" id="upload-hint">Cliquez ou glissez une image ici</p>
+                <p class="file-upload-sub">JPG, PNG, WEBP, GIF — max 5 Mo</p>
+              </div>
+              <!-- Aperçu nouvelle image -->
+              <div class="file-preview" id="image-preview" style="display:none;margin-top:10px">
+                <img id="preview-img" src="" alt="Aperçu" />
+                <div class="file-preview-bar">
+                  <span class="file-preview-name" id="preview-name"></span>
+                  <button type="button" class="file-preview-remove" id="remove-image">Annuler</button>
+                </div>
+              </div>
+              <span class="field-error" data-error="cover_image"></span>
+            </div>
+
             <button type="submit" class="btn btn-block" id="submit-btn" style="margin-top:8px">Enregistrer les modifications</button>
           </form>
         </div>

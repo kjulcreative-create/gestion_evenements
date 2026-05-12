@@ -6,6 +6,7 @@ use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -32,7 +33,14 @@ class EventController extends Controller
 
     public function store(StoreEventRequest $request)
     {
-        $event = Event::create($request->validated());
+        $validated = $request->validated();
+
+        if ($request->hasFile('cover_image')) {
+            $path = $request->file('cover_image')->store('events', 'public');
+            $validated['cover_image'] = url('storage/' . $path);
+        }
+
+        $event = Event::create($validated);
         $event->loadCount('registrations');
 
         return response()->json($this->formatEvent($event), 201);
@@ -47,10 +55,30 @@ class EventController extends Controller
 
     public function update(UpdateEventRequest $request, Event $event)
     {
-        $event->update($request->validated());
+        $validated = $request->validated();
+
+        if ($request->hasFile('cover_image')) {
+            $this->deleteLocalImage($event->cover_image);
+            $path = $request->file('cover_image')->store('events', 'public');
+            $validated['cover_image'] = url('storage/' . $path);
+        } elseif ($request->input('remove_cover_image') === '1') {
+            $this->deleteLocalImage($event->cover_image);
+            $validated['cover_image'] = null;
+        }
+
+        $event->update($validated);
         $event->loadCount('registrations');
 
         return response()->json($this->formatEvent($event), 200);
+    }
+
+    private function deleteLocalImage(?string $url): void
+    {
+        if (!$url) return;
+        $path = parse_url($url, PHP_URL_PATH);
+        if ($path && str_starts_with($path, '/storage/')) {
+            Storage::disk('public')->delete(substr($path, strlen('/storage/')));
+        }
     }
 
     public function destroy(Event $event)

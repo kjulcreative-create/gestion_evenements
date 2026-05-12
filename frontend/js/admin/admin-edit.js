@@ -7,8 +7,67 @@
   const deleteBtn = document.getElementById('delete-btn');
   const titleCount = document.getElementById('title-count');
 
+  const uploadZone = document.getElementById('upload-zone');
+  const fileInput = document.getElementById('cover_image');
+  const imagePreview = document.getElementById('image-preview');
+  const previewImg = document.getElementById('preview-img');
+  const previewName = document.getElementById('preview-name');
+  const removeImageBtn = document.getElementById('remove-image');
+  const currentImageWrap = document.getElementById('current-image-wrap');
+  const currentImg = document.getElementById('current-img');
+  const removeCurrentBtn = document.getElementById('remove-current-image');
+  const uploadHint = document.getElementById('upload-hint');
+
+  let removeCoverImage = false;
+
   function updateCount() { titleCount.textContent = `${form.title.value.length}/100`; }
   form.title.addEventListener('input', updateCount);
+
+  function showNewPreview(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      previewImg.src = e.target.result;
+      previewName.textContent = file.name;
+      uploadZone.style.display = 'none';
+      imagePreview.style.display = 'block';
+      removeCoverImage = false;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearNewPreview() {
+    fileInput.value = '';
+    previewImg.src = '';
+    previewName.textContent = '';
+    uploadZone.style.display = '';
+    imagePreview.style.display = 'none';
+  }
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files[0]) showNewPreview(fileInput.files[0]);
+  });
+
+  removeImageBtn.addEventListener('click', clearNewPreview);
+
+  removeCurrentBtn.addEventListener('click', () => {
+    currentImageWrap.style.display = 'none';
+    removeCoverImage = true;
+    uploadHint.textContent = 'Cliquez pour choisir une image de remplacement';
+  });
+
+  uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+  uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      fileInput.files = dt.files;
+      showNewPreview(file);
+    }
+  });
 
   function setError(name, msg) {
     const el = form.querySelector(`[data-error="${name}"]`);
@@ -56,6 +115,13 @@
       form.location.value = ev.location;
       form.capacity.value = ev.capacity;
       updateCount();
+
+      if (ev.coverImage) {
+        currentImg.src = ev.coverImage;
+        currentImageWrap.style.display = 'block';
+        uploadHint.textContent = 'Remplacer l\'image';
+      }
+
       document.getElementById('loading-state').style.display = 'none';
       document.getElementById('page-content').style.display = 'block';
       loadRegistrations();
@@ -81,13 +147,19 @@
     btn.disabled = true;
     btn.innerHTML = `<span class="spinner"></span> Enregistrement...`;
     try {
-      await api.updateEvent(eventId, {
-        title: raw.title,
-        description: raw.description || null,
-        date: toIsoUtc(raw.date),
-        location: raw.location,
-        capacity: parseInt(raw.capacity, 10),
-      });
+      const fd = new FormData();
+      fd.append('title', raw.title);
+      fd.append('description', raw.description || '');
+      fd.append('date', toIsoUtc(raw.date));
+      fd.append('location', raw.location);
+      fd.append('capacity', parseInt(raw.capacity, 10));
+      if (fileInput.files[0]) {
+        fd.append('cover_image', fileInput.files[0]);
+      } else if (removeCoverImage) {
+        fd.append('remove_cover_image', '1');
+      }
+
+      await api.updateEvent(eventId, fd);
       window.location.href = 'index.html?updated=1';
     } catch (err) {
       if (err.status === 400 && err.data && err.data.details) {
